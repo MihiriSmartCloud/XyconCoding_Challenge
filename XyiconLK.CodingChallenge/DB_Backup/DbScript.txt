@@ -1,0 +1,244 @@
+USE [master]
+GO
+/****** Object:  Database [Code_challengeDB]    Script Date: 01/07/2021 23:20:29 ******/
+CREATE DATABASE [Code_challengeDB]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'Code_challengeDB', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.SQL2019\MSSQL\DATA\Code_challengeDB.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+ LOG ON 
+( NAME = N'Code_challengeDB_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.SQL2019\MSSQL\DATA\Code_challengeDB_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+ WITH CATALOG_COLLATION = DATABASE_DEFAULT
+GO
+ALTER DATABASE [Code_challengeDB] SET COMPATIBILITY_LEVEL = 150
+GO
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [Code_challengeDB].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE [Code_challengeDB] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [Code_challengeDB] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [Code_challengeDB] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [Code_challengeDB] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [Code_challengeDB] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [Code_challengeDB] SET AUTO_CLOSE OFF 
+GO
+ALTER DATABASE [Code_challengeDB] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [Code_challengeDB] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [Code_challengeDB] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [Code_challengeDB] SET CURSOR_DEFAULT  GLOBAL 
+GO
+ALTER DATABASE [Code_challengeDB] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [Code_challengeDB] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [Code_challengeDB] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [Code_challengeDB] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [Code_challengeDB] SET  DISABLE_BROKER 
+GO
+ALTER DATABASE [Code_challengeDB] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [Code_challengeDB] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+ALTER DATABASE [Code_challengeDB] SET TRUSTWORTHY OFF 
+GO
+ALTER DATABASE [Code_challengeDB] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+ALTER DATABASE [Code_challengeDB] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [Code_challengeDB] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+ALTER DATABASE [Code_challengeDB] SET HONOR_BROKER_PRIORITY OFF 
+GO
+ALTER DATABASE [Code_challengeDB] SET RECOVERY SIMPLE 
+GO
+ALTER DATABASE [Code_challengeDB] SET  MULTI_USER 
+GO
+ALTER DATABASE [Code_challengeDB] SET PAGE_VERIFY CHECKSUM  
+GO
+ALTER DATABASE [Code_challengeDB] SET DB_CHAINING OFF 
+GO
+ALTER DATABASE [Code_challengeDB] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+ALTER DATABASE [Code_challengeDB] SET TARGET_RECOVERY_TIME = 60 SECONDS 
+GO
+ALTER DATABASE [Code_challengeDB] SET DELAYED_DURABILITY = DISABLED 
+GO
+ALTER DATABASE [Code_challengeDB] SET QUERY_STORE = OFF
+GO
+USE [Code_challengeDB]
+GO
+/****** Object:  Table [dbo].[tblDeveloper]    Script Date: 01/07/2021 23:20:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tblDeveloper](
+	[dev_Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [varchar](50) NOT NULL,
+	[Email] [varchar](50) NOT NULL,
+	[Timestamp] [datetime] NOT NULL,
+ CONSTRAINT [PK_tblDeveloper] PRIMARY KEY CLUSTERED 
+(
+	[dev_Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tblForeignTour]    Script Date: 01/07/2021 23:20:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tblForeignTour](
+	[visit_id] [int] IDENTITY(1,1) NOT NULL,
+	[Country] [varchar](50) NOT NULL,
+	[City] [varchar](50) NOT NULL,
+	[VisitedYear] [int] NOT NULL,
+	[userId] [int] NOT NULL,
+ CONSTRAINT [PK_tblForeignTour] PRIMARY KEY CLUSTERED 
+(
+	[visit_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tblLog]    Script Date: 01/07/2021 23:20:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tblLog](
+	[log_id] [int] IDENTITY(1,1) NOT NULL,
+	[table_name] [varchar](50) NOT NULL,
+	[record_id] [int] NOT NULL,
+	[event_date_time] [datetime] NOT NULL,
+	[user_id] [int] NOT NULL,
+	[event_type] [varchar](50) NOT NULL,
+ CONSTRAINT [PK_tblLog] PRIMARY KEY CLUSTERED 
+(
+	[log_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tblPersonDetails]    Script Date: 01/07/2021 23:20:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tblPersonDetails](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[FirstName] [varchar](50) NOT NULL,
+	[LastName] [varchar](50) NOT NULL,
+	[FullName] [varchar](50) NOT NULL,
+	[Email] [varchar](50) NOT NULL,
+	[Address] [varchar](50) NOT NULL,
+	[PhoneNumber] [varchar](50) NOT NULL,
+	[Birthdate] [datetime] NOT NULL,
+	[Age] [int] NOT NULL,
+ CONSTRAINT [PK_tblPersonDetails] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tblUser]    Script Date: 01/07/2021 23:20:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tblUser](
+	[user_id] [int] IDENTITY(1,1) NOT NULL,
+	[first_name] [varchar](50) NOT NULL,
+	[last_name] [varchar](50) NOT NULL,
+	[mobile_no] [varchar](50) NOT NULL,
+	[email] [varchar](50) NOT NULL,
+	[password] [varchar](50) NOT NULL,
+	[created_by] [varchar](50) NOT NULL,
+	[created_on] [datetime] NOT NULL,
+	[updated_by] [varchar](50) NULL,
+	[updated_on] [datetime] NULL,
+ CONSTRAINT [PK_tblUser] PRIMARY KEY CLUSTERED 
+(
+	[user_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[tblDeveloper] ON 
+
+INSERT [dbo].[tblDeveloper] ([dev_Id], [Name], [Email], [Timestamp]) VALUES (1, N'Mihiri Lakmal', N'mlpinkeydtap@live.com', CAST(N'2021-06-30T12:00:00.000' AS DateTime))
+INSERT [dbo].[tblDeveloper] ([dev_Id], [Name], [Email], [Timestamp]) VALUES (4, N'Yasitha Wijesinghe', N'yasithaW@gmail.com', CAST(N'2021-06-30T14:43:22.000' AS DateTime))
+SET IDENTITY_INSERT [dbo].[tblDeveloper] OFF
+GO
+SET IDENTITY_INSERT [dbo].[tblForeignTour] ON 
+
+INSERT [dbo].[tblForeignTour] ([visit_id], [Country], [City], [VisitedYear], [userId]) VALUES (1, N'Austalia', N'Melborne', 2021, 101)
+INSERT [dbo].[tblForeignTour] ([visit_id], [Country], [City], [VisitedYear], [userId]) VALUES (2, N'Austalia', N'Perth', 2021, 102)
+INSERT [dbo].[tblForeignTour] ([visit_id], [Country], [City], [VisitedYear], [userId]) VALUES (3, N'Austalia', N'Canberra', 2021, 102)
+INSERT [dbo].[tblForeignTour] ([visit_id], [Country], [City], [VisitedYear], [userId]) VALUES (4, N'Austalia', N'New south wales', 2021, 110)
+INSERT [dbo].[tblForeignTour] ([visit_id], [Country], [City], [VisitedYear], [userId]) VALUES (5, N'New Zeland', N'Welington', 2020, 111)
+INSERT [dbo].[tblForeignTour] ([visit_id], [Country], [City], [VisitedYear], [userId]) VALUES (6, N'New Zeland', N'Aukland', 2019, 111)
+SET IDENTITY_INSERT [dbo].[tblForeignTour] OFF
+GO
+SET IDENTITY_INSERT [dbo].[tblLog] ON 
+
+INSERT [dbo].[tblLog] ([log_id], [table_name], [record_id], [event_date_time], [user_id], [event_type]) VALUES (8, N'tblUser', 1, CAST(N'2021-06-30T09:39:13.193' AS DateTime), 1, N'INSERT')
+INSERT [dbo].[tblLog] ([log_id], [table_name], [record_id], [event_date_time], [user_id], [event_type]) VALUES (11, N'tblUser', 1, CAST(N'2021-06-30T10:34:13.193' AS DateTime), 1, N'UPDATE')
+SET IDENTITY_INSERT [dbo].[tblLog] OFF
+GO
+SET IDENTITY_INSERT [dbo].[tblPersonDetails] ON 
+
+INSERT [dbo].[tblPersonDetails] ([ID], [FirstName], [LastName], [FullName], [Email], [Address], [PhoneNumber], [Birthdate], [Age]) VALUES (71, N'Mihiri', N'Lakmal', N'Mihiri Lakmal', N'mihiri@gmail.com', N'Colombo', N'0716144860', CAST(N'1989-05-16T00:00:00.000' AS DateTime), 31)
+INSERT [dbo].[tblPersonDetails] ([ID], [FirstName], [LastName], [FullName], [Email], [Address], [PhoneNumber], [Birthdate], [Age]) VALUES (101, N'Sanushi', N'Salgado', N'Sanushi Salgado ', N'Sanushi@gmail.com', N'Colombo', N'0716144860', CAST(N'1989-05-16T00:00:00.000' AS DateTime), 31)
+INSERT [dbo].[tblPersonDetails] ([ID], [FirstName], [LastName], [FullName], [Email], [Address], [PhoneNumber], [Birthdate], [Age]) VALUES (102, N'Supun', N'Perera', N'Supun Perera', N'supun@gmail.com', N'Colombo', N'0716144860', CAST(N'1989-05-16T00:00:00.000' AS DateTime), 31)
+INSERT [dbo].[tblPersonDetails] ([ID], [FirstName], [LastName], [FullName], [Email], [Address], [PhoneNumber], [Birthdate], [Age]) VALUES (103, N'Rajitha', N'Withana', N'Rajitha Withana', N'rajitha@gmail.com', N'Colombo', N'0716144860', CAST(N'1989-05-16T00:00:00.000' AS DateTime), 31)
+INSERT [dbo].[tblPersonDetails] ([ID], [FirstName], [LastName], [FullName], [Email], [Address], [PhoneNumber], [Birthdate], [Age]) VALUES (104, N'Saman', N'Lal', N'Saman Lal', N'saman@gmail.com', N'Colombo', N'0716144860', CAST(N'1989-05-16T00:00:00.000' AS DateTime), 31)
+INSERT [dbo].[tblPersonDetails] ([ID], [FirstName], [LastName], [FullName], [Email], [Address], [PhoneNumber], [Birthdate], [Age]) VALUES (105, N'Sithum', N'Sigera', N'Sithum Sigera', N'sithum@gmail.com', N'Colombo', N'0716144860', CAST(N'1989-05-16T00:00:00.000' AS DateTime), 31)
+INSERT [dbo].[tblPersonDetails] ([ID], [FirstName], [LastName], [FullName], [Email], [Address], [PhoneNumber], [Birthdate], [Age]) VALUES (106, N'Kevin', N'Shyan', N'Kevin Shyan', N'kevin@gmail.com', N'Colombo', N'0716144860', CAST(N'1989-05-16T00:00:00.000' AS DateTime), 31)
+INSERT [dbo].[tblPersonDetails] ([ID], [FirstName], [LastName], [FullName], [Email], [Address], [PhoneNumber], [Birthdate], [Age]) VALUES (107, N'Madura', N'Wanniarachchi', N'Madura Wanniarachchi', N'madura@gmail.com', N'Colombo', N'0716144860', CAST(N'1989-05-16T00:00:00.000' AS DateTime), 31)
+INSERT [dbo].[tblPersonDetails] ([ID], [FirstName], [LastName], [FullName], [Email], [Address], [PhoneNumber], [Birthdate], [Age]) VALUES (108, N'Madhavi', N'Ranasinghe', N'Madhavi Ranasinghe', N'madhavi@gmail.com', N'Colombo', N'0716144860', CAST(N'1989-05-16T00:00:00.000' AS DateTime), 31)
+INSERT [dbo].[tblPersonDetails] ([ID], [FirstName], [LastName], [FullName], [Email], [Address], [PhoneNumber], [Birthdate], [Age]) VALUES (109, N'Madhawa', N'Ranasinghe', N'Madhawa ranasinghe', N'madhawa@gmail.com', N'Colombo', N'0716144860', CAST(N'1989-05-16T00:00:00.000' AS DateTime), 30)
+INSERT [dbo].[tblPersonDetails] ([ID], [FirstName], [LastName], [FullName], [Email], [Address], [PhoneNumber], [Birthdate], [Age]) VALUES (110, N'Darin', N'Weerasinghe', N'Darin Weerasinghe', N'darin@gmail.com', N'Colombo', N'0716144860', CAST(N'1989-05-16T00:00:00.000' AS DateTime), 31)
+INSERT [dbo].[tblPersonDetails] ([ID], [FirstName], [LastName], [FullName], [Email], [Address], [PhoneNumber], [Birthdate], [Age]) VALUES (111, N'Bandula', N'Weerasinghe', N'Bandula Weerasinghe', N'bandula@gmail.com', N'Colombo', N'0716144860', CAST(N'1989-05-16T00:00:00.000' AS DateTime), 31)
+INSERT [dbo].[tblPersonDetails] ([ID], [FirstName], [LastName], [FullName], [Email], [Address], [PhoneNumber], [Birthdate], [Age]) VALUES (112, N'Iresha', N'Lakmini', N'Iresha Lakmini', N'iresha@gmail.com', N'Colombo', N'0716144860', CAST(N'1989-05-16T00:00:00.000' AS DateTime), 30)
+INSERT [dbo].[tblPersonDetails] ([ID], [FirstName], [LastName], [FullName], [Email], [Address], [PhoneNumber], [Birthdate], [Age]) VALUES (113, N'Nihal', N'Silva', N'Nihal Silva', N'nihal@gmail.com', N'Colombo', N'0716144860', CAST(N'1989-05-16T00:00:00.000' AS DateTime), 31)
+INSERT [dbo].[tblPersonDetails] ([ID], [FirstName], [LastName], [FullName], [Email], [Address], [PhoneNumber], [Birthdate], [Age]) VALUES (114, N'Ranjith', N'Colambage', N'Ranjith Colambage', N'ranjith@gmail.com', N'Colombo', N'0716144860', CAST(N'1989-05-16T00:00:00.000' AS DateTime), 31)
+INSERT [dbo].[tblPersonDetails] ([ID], [FirstName], [LastName], [FullName], [Email], [Address], [PhoneNumber], [Birthdate], [Age]) VALUES (115, N'Aseka', N'Gunarathna', N'Aseka Gunarathna', N'aseka@gmail.com', N'Colombo', N'0716144860', CAST(N'1989-05-16T00:00:00.000' AS DateTime), 30)
+INSERT [dbo].[tblPersonDetails] ([ID], [FirstName], [LastName], [FullName], [Email], [Address], [PhoneNumber], [Birthdate], [Age]) VALUES (116, N'Kusal', N'Mendis', N'Kusal Mendis', N'kusalM@gmail.com', N'Colombo', N'0716144860', CAST(N'1989-05-16T00:00:00.000' AS DateTime), 31)
+INSERT [dbo].[tblPersonDetails] ([ID], [FirstName], [LastName], [FullName], [Email], [Address], [PhoneNumber], [Birthdate], [Age]) VALUES (117, N'Dhanushka', N'Gunathilaka', N'Dhanushka Gunathilaka', N'danny@gmail.com', N'Colombo', N'0716144860', CAST(N'1989-05-16T00:00:00.000' AS DateTime), 31)
+INSERT [dbo].[tblPersonDetails] ([ID], [FirstName], [LastName], [FullName], [Email], [Address], [PhoneNumber], [Birthdate], [Age]) VALUES (118, N'Niroshan', N'Dickwella', N'Nirishan Dickwella', N'dickka@gmail.com', N'Colombo', N'0716144860', CAST(N'1989-05-16T00:00:00.000' AS DateTime), 31)
+INSERT [dbo].[tblPersonDetails] ([ID], [FirstName], [LastName], [FullName], [Email], [Address], [PhoneNumber], [Birthdate], [Age]) VALUES (119, N'Sachini', N'Sithumini', N'Sachini Sithumini', N'sachee@gmail.com', N'Colombo', N'0716144860', CAST(N'1989-05-16T00:00:00.000' AS DateTime), 30)
+INSERT [dbo].[tblPersonDetails] ([ID], [FirstName], [LastName], [FullName], [Email], [Address], [PhoneNumber], [Birthdate], [Age]) VALUES (120, N'Wanindu', N'Hasaranga', N'Wanindu Hasaranga', N'waniya99@gmail.com', N'Colombo', N'0716144860', CAST(N'1989-05-16T00:00:00.000' AS DateTime), 31)
+INSERT [dbo].[tblPersonDetails] ([ID], [FirstName], [LastName], [FullName], [Email], [Address], [PhoneNumber], [Birthdate], [Age]) VALUES (121, N'Kusal', N'Perera', N'Kusal Perera', N'kjp@gmail.com', N'Colombo', N'0716144860', CAST(N'1989-05-16T00:00:00.000' AS DateTime), 29)
+INSERT [dbo].[tblPersonDetails] ([ID], [FirstName], [LastName], [FullName], [Email], [Address], [PhoneNumber], [Birthdate], [Age]) VALUES (122, N'Charith', N'Asalanka', N'Charith Asalanka', N'charithA@gmail.com', N'Colombo', N'0716144860', CAST(N'1989-05-16T00:00:00.000' AS DateTime), 31)
+INSERT [dbo].[tblPersonDetails] ([ID], [FirstName], [LastName], [FullName], [Email], [Address], [PhoneNumber], [Birthdate], [Age]) VALUES (123, N'Pasan', N'Karunarathna', N'Pasan Karunarathna', N'pasanK@gmail.com', N'Colombo', N'0716144860', CAST(N'1989-05-16T00:00:00.000' AS DateTime), 29)
+INSERT [dbo].[tblPersonDetails] ([ID], [FirstName], [LastName], [FullName], [Email], [Address], [PhoneNumber], [Birthdate], [Age]) VALUES (124, N'Gihan', N'De Silva', N'Gihan De Silva', N'gihanD@gmail.com', N'Colombo', N'0716144860', CAST(N'1989-05-16T00:00:00.000' AS DateTime), 31)
+INSERT [dbo].[tblPersonDetails] ([ID], [FirstName], [LastName], [FullName], [Email], [Address], [PhoneNumber], [Birthdate], [Age]) VALUES (125, N'Pramod', N'Gunarathna', N'Pramod Gunarathna', N'pramodG@gmail.com', N'Colombo', N'0716144860', CAST(N'1989-05-16T00:00:00.000' AS DateTime), 30)
+INSERT [dbo].[tblPersonDetails] ([ID], [FirstName], [LastName], [FullName], [Email], [Address], [PhoneNumber], [Birthdate], [Age]) VALUES (126, N'Kulitha', N'De Silva', N'Kulitha De Silva', N'kulithaD@gmail.com', N'Colombo', N'0716144860', CAST(N'1989-05-16T00:00:00.000' AS DateTime), 31)
+INSERT [dbo].[tblPersonDetails] ([ID], [FirstName], [LastName], [FullName], [Email], [Address], [PhoneNumber], [Birthdate], [Age]) VALUES (127, N'Randika', N'Niroshan', N'Randika Niroshan', N'maxxis@gmail.com', N'Colombo', N'0716144860', CAST(N'1989-05-16T00:00:00.000' AS DateTime), 29)
+INSERT [dbo].[tblPersonDetails] ([ID], [FirstName], [LastName], [FullName], [Email], [Address], [PhoneNumber], [Birthdate], [Age]) VALUES (128, N'Nirmal', N'Perera', N'Nirmal Perera', N'nimalP@gmail.com', N'Colombo', N'0716144860', CAST(N'1989-05-16T00:00:00.000' AS DateTime), 30)
+INSERT [dbo].[tblPersonDetails] ([ID], [FirstName], [LastName], [FullName], [Email], [Address], [PhoneNumber], [Birthdate], [Age]) VALUES (129, N'Ashan', N'Silva', N'Ashan Silva', N'lap57@gmail.com', N'Colombo', N'0716144860', CAST(N'1989-05-16T00:00:00.000' AS DateTime), 30)
+SET IDENTITY_INSERT [dbo].[tblPersonDetails] OFF
+GO
+SET IDENTITY_INSERT [dbo].[tblUser] ON 
+
+INSERT [dbo].[tblUser] ([user_id], [first_name], [last_name], [mobile_no], [email], [password], [created_by], [created_on], [updated_by], [updated_on]) VALUES (3, N'Mihiri', N'Lakmal', N'0716144860', N'mlpinkeydtap@live.com', N'ZGRkZGQ=', N'mlpinkeydtap@live.com', CAST(N'2021-06-30T14:55:14.030' AS DateTime), NULL, NULL)
+SET IDENTITY_INSERT [dbo].[tblUser] OFF
+GO
+ALTER TABLE [dbo].[tblForeignTour]  WITH CHECK ADD  CONSTRAINT [FK_tblForeignTour_tblUser] FOREIGN KEY([userId])
+REFERENCES [dbo].[tblPersonDetails] ([ID])
+GO
+ALTER TABLE [dbo].[tblForeignTour] CHECK CONSTRAINT [FK_tblForeignTour_tblUser]
+GO
+USE [master]
+GO
+ALTER DATABASE [Code_challengeDB] SET  READ_WRITE 
+GO
